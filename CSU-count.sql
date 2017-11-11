@@ -6,7 +6,7 @@
 
 * Creation Date : 11-11-2017
 
-* Last Modified : Sat 11 Nov 2017 01:21:42 AM STD
+* Last Modified : Sat 11 Nov 2017 01:43:37 PM STD
 
 * Created By :  Jordan Castillo
 
@@ -24,23 +24,42 @@ HAVING AVG(fs.fee) > 2500
 ORDER BY SUM(fs.fee) ASC;
 
 -- Q2
-SELECT 
-FROM 
-WHERE 
+SELECT cp.Campus, ROUND(AVG(er.Enrolled), 0) AS averageEnrolled, MAX(er.Enrolled), MIN(er.Enrolled)
+FROM campuses cp, enrollments er
+WHERE cp.Id = er.CampusId
+GROUP BY cp.Id
+HAVING COUNT(DISTINCT er.Year) > 60
+ORDER BY AVG(er.Enrolled);
 
 -- Q3
-SELECT 
-FROM 
-WHERE 
+SELECT cp.Campus, SUM(dg.degrees)
+FROM campuses cp, degrees dg
+WHERE cp.Id = dg.CampusId
+	AND (dg.year > 1997)
+	AND (dg.year < 2003)
+	AND (cp.County = "Los Angeles" OR cp.County = "Orange")
+GROUP BY cp.Id
+ORDER BY SUM(dg.degrees) DESC;
 
 -- Q4
 SELECT 
-FROM 
-WHERE 
+FROM campuses cp, enrollments er
+WHERE cp.Id = er.CampusId
+	AND er.Year = 2004
+GROUP BY cp.Id
+HAVING er.Enrolled > 20000
 
-
-
-
-
+SELECT cp.Campus, COUNT(de.Gr)
+FROM campuses cp
+	JOIN enrollments er
+		ON cp.Id = er.CampusId
+	JOIN discEnr de
+		ON cp.Id = de.CampusId
+WHERE er.Year = de.Year
+	AND er.Year = 2004
+	AND er.Enrolled > 20000
+	AND de.Gr > 0
+GROUP BY cp.Id
+ORDER BY cp.Campus;
 
 
