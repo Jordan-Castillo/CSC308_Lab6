@@ -6,7 +6,7 @@
 
 * Creation Date : 11-11-2017
 
-* Last Modified : Sat 11 Nov 2017 01:43:37 PM STD
+* Last Modified : Tue 14 Nov 2017 12:49:18 AM STD
 
 * Created By :  Jordan Castillo
 
@@ -42,13 +42,6 @@ GROUP BY cp.Id
 ORDER BY SUM(dg.degrees) DESC;
 
 -- Q4
-SELECT 
-FROM campuses cp, enrollments er
-WHERE cp.Id = er.CampusId
-	AND er.Year = 2004
-GROUP BY cp.Id
-HAVING er.Enrolled > 20000
-
 SELECT cp.Campus, COUNT(de.Gr)
 FROM campuses cp
 	JOIN enrollments er
