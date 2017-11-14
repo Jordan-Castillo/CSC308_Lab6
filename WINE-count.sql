@@ -6,7 +6,7 @@
 
 * Creation Date : 11-11-2017
 
-* Last Modified : Sun 12 Nov 2017 04:16:51 PM STD
+* Last Modified : Tue 14 Nov 2017 12:45:35 AM STD
 
 * Created By :  Jordan Castillo
 
@@ -32,17 +32,15 @@ GROUP BY wn.Vintage
 ORDER BY wn.Vintage;
 
 --- Q3
-SELECT wn1.Appellation, ap.County, COUNT(wn2.Vintage = 2008)
-FROM wine wn1
-	JOIN wine wn2
-		ON wn1.Appellation = wn2.Appellation
+SELECT wn.Appellation, ap.County, COUNT(*),
+		 ROUND(AVG(wn.Price), 2) AS avgPrice, SUM(wn.Cases * 12) AS totalBottles
+FROM wine wn
 	JOIN appellations ap
-		ON wn1.Appellation = ap.Appellation
-WHERE wn1.Vintage = 2007
-	AND wn2.Vintage != 2007
-	AND wn1.Grape = "Cabernet Sauvingnon"
-GROUP BY wn1.Appellation
-HAVING COUNT(DISTINCT wn1.WineId) >= 2;
+		ON wn.Appellation = ap.Appellation
+WHERE wn.Vintage = 2007
+	AND wn.Grape = "Cabernet Sauvingnon"
+GROUP BY wn.Appellation
+HAVING COUNT(*) >= 2;
 
 --- Q4
 SELECT wn.Appellation, SUM(wn.PRICE * wn.Cases * 12) AS totalPossibleRevenue
